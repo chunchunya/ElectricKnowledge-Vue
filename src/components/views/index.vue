@@ -55,8 +55,8 @@ export default {
           })(this.$refs.graph)
             /*------------------------------------------- 画布配置 -------------------------------------------*/
             .backgroundColor("black")                                                           // 背景颜色，支持内置颜色和RGB
-            .width(this.$refs.graph.parentElement.offsetWidth )                                       // 画布宽度(充满父级容器)
-            .height(this.$refs.graph.parentElement.offsetHeight)                           // 画布高度(充满父级容器)
+            .width(this.$refs.graph.offsetWidth-10)                                       // 画布宽度(充满父级容器)
+            .height(this.$refs.graph.offsetHeight)                           // 画布高度(充满父级容器)
             .showNavInfo(false)                                                               // 是否显示底部导航提示信息
             /*------------------------------------------- 节点配置 -------------------------------------------*/
             .nodeRelSize(5)                                                                           // 节点大小（支持数值）
@@ -64,7 +64,7 @@ export default {
             .nodeAutoColorBy('id')                                                                    // 节点颜色：根据属性划分（参数为graphData({nodes: nodes, links: links})）中nodes中每个node中的属性名称）
             .nodeAutoColorBy(node => node.id)                                                         // 节点颜色：回调函数处理（功能同上）
             .nodeOpacity(1)                                                                           // 节点透明度：回调函数处理（根据label划分）
-            .nodeLabel("labels")                                                          // 节点标签显示内容（鼠标滑到节点显示，支持直接写节点属性名称）
+            // .nodeLabel("labels")                                                          // 节点标签显示内容（鼠标滑到节点显示，支持直接写节点属性名称）
             .nodeLabel(node => node.labels+'<br>'+JSON.stringify(node.attrs))             // 节点标签显示内容（鼠标滑到节点显示，也可以使用回调函数）
             .onNodeHover(node => this.$refs.graph.style.cursor = node ? 'pointer' : null)     // 鼠标滑到节点上改变指针
             .onNodeClick(node => {                                                            // 点击节点事件（视角转移到该节点）
@@ -86,9 +86,9 @@ export default {
             .linkDirectionalParticles(5)                                                             // 边粒子：数量
             .linkDirectionalParticleSpeed(1)                                                         // 边粒子：移动速度
             .linkDirectionalParticleWidth(0.3)                                                       // 边粒子：大小
-            .linkColor(()=>'RGB(170,170,170)')                                                       // 边颜色
+            .linkColor(()=>'RGB(119,136,153)')                                                       // 边颜色
             .linkAutoColorBy(r => r.type)                                                            // 边颜色自动化分
-            .linkOpacity(0.5)                                                                        // 边透明度（越小越透明）
+            .linkOpacity(0.3)                                                                        // 边透明度（越小越透明）
 
           /********************************************** 2.加载数据 **********************************************/
           // let graph_info = this.getAllData();
@@ -109,18 +109,18 @@ export default {
           })
           /********************************************** 3.动态设置 **********************************************/
           /*  修改边长度,同d3引擎用法  */
-          this.myGraph.d3Force('link').distance(400);
-          /*  设置图谱自动旋转  */
-          const distance = 500;
-          let angle = 0;
-          setInterval(() => {
-            this.myGraph.cameraPosition({
-              x: distance * Math.sin(angle),
-              y: distance * Math.sin(angle),
-              z: distance * Math.cos(angle)
-            });
-            angle += Math.PI / 1000;
-          }, 100);
+          this.myGraph.d3Force('link').distance(500);
+          // /*  设置图谱自动旋转  */
+          const distance = 400;
+          // let angle = 0;
+          // setInterval(() => {
+          //   this.myGraph.cameraPosition({
+          //     x: distance * Math.sin(angle),
+          //     y: distance * Math.sin(angle),
+          //     z: distance * Math.cos(angle)
+          //   });
+          //   angle += Math.PI / 1000;
+          // }, 100);
       } catch (err){
         console.log(err);
       }
@@ -216,8 +216,8 @@ export default {
 
 #graph{
   background-color: rgb(2, 44, 54);
-  padding: 1rem;
-  height:100vh;
+  padding: 5px;
+  height:100%;
   /*min-width: 300px;*/
   width: 100%;
   border-radius: 5px;
